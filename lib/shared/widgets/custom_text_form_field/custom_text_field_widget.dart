@@ -9,7 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final String label;
   final String helperText;
-  final String? Function(String? value) validator;
+  final String? Function(String?) validator;
   final ValueChanged<String> onChanged;
 
   const CustomTextFormField({

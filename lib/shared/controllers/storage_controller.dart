@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:level_up_3/shared/models/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CreateAccountController {
+class StorageController {
+  bool saveSuccess = false;
+  var checkUser;
+
   var userModel = UserModel(email: "", name: "", password: "");
 
   void onChange({String? email, String? name, String? password}) {
@@ -10,13 +12,13 @@ class CreateAccountController {
         userModel.copyWith(name: name, email: email, password: password);
   }
 
-  Future<void> saveUser(context) async {
+  Future<void> saveUser() async {
     try {
       final instance = await SharedPreferences.getInstance();
       final response = await instance.setString("user", userModel.toJson());
       if (response) {
-        print('Success!');
-        Navigator.pushNamed(context, "/response");
+        print("Deu certo!");
+        saveSuccess = !saveSuccess;
       }
     } catch (error) {
       print(error);
@@ -28,9 +30,7 @@ class CreateAccountController {
       final instance = await SharedPreferences.getInstance();
       final response = instance.getString("user");
       if (response != null) {
-        final user = UserModel.fromJson(response);
-        //userModel = user;
-        print(user);
+        checkUser = UserModel.fromJson(response);
       }
     } catch (error) {
       print(error);

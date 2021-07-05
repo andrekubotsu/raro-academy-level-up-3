@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:level_up_3/modules/CreateAccount/create_account_page.dart';
+
 import 'package:level_up_3/modules/Login/login_page.dart';
 import 'package:level_up_3/modules/PassRecovery/pass_recovery_page.dart';
 import 'package:level_up_3/modules/Response/response_page.dart';
@@ -25,7 +26,7 @@ class AppWidget extends StatelessWidget {
         "/createaccount": (context) => CreateAccount(),
         "/login": (context) => LoginPage(),
         "/passrecovery": (context) => PassRecovery(),
-        "respose": (context) => ResponsePage(),
+        "/response": (context) => ResponsePage(),
       },
     );
   }

@@ -19,33 +19,33 @@ class CustomButtonWidget extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
       child: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: 250,
-              height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: typeColorOrange ? AppColors.orange : Colors.white,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 250,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: typeColorOrange ? AppColors.orange : Colors.white,
+                ),
               ),
-            ),
-            GestureDetector(
-              onTap: onTap,
-              child: Text(
+              Text(
                 label,
                 style: GoogleFonts.oswald(
                   color: typeColorOrange ? Colors.white : AppColors.orange,
                   fontSize: 18,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
 
-    // To remember: inkwell don't works fine with containers etc
+    // To remember: inkwell doesn't works fine with containers etc
 
     // return InkWell(
     //   borderRadius: BorderRadius.circular(25),

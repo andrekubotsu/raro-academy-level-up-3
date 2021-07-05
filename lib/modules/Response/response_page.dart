@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:level_up_3/shared/widgets/background_widget/background_widget.dart';
-import 'package:level_up_3/shared/widgets/close_button_widget/close_button_widget.dart';
+
 import 'package:level_up_3/shared/widgets/custom_button_widget/custom_button_widget.dart';
 
 class ResponsePage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _ResponsePageState extends State<ResponsePage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                height: 400,
+                height: 300,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -35,6 +35,7 @@ class _ResponsePageState extends State<ResponsePage> {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Success!",
@@ -45,22 +46,16 @@ class _ResponsePageState extends State<ResponsePage> {
                       SizedBox(
                         height: 20,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/passrecovery");
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only(
-                            top: 20,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Now you can login:",
+                            style: GoogleFonts.oswald(
+                                fontSize: 24, fontWeight: FontWeight.w300),
                           ),
-                          child: Text(
-                            "Forgot password!",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                      )
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -74,15 +69,16 @@ class _ResponsePageState extends State<ResponsePage> {
                 CustomButtonWidget(
                   label: "Login",
                   typeColorOrange: true,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, "/login");
+                  },
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 60,
                 ),
               ],
             ),
           ),
-          CloseButtonWidget()
         ],
       ),
     );

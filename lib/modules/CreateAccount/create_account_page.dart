@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:level_up_3/modules/CreateAccount/create_account_controller.dart';
+import 'package:level_up_3/shared/controllers/storage_controller.dart';
+import 'package:level_up_3/shared/validators/validators.dart';
 import 'package:level_up_3/shared/widgets/background_widget/background_widget.dart';
 import 'package:level_up_3/shared/widgets/close_button_widget/close_button_widget.dart';
 import 'package:level_up_3/shared/widgets/custom_button_widget/custom_button_widget.dart';
@@ -14,14 +15,17 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  final controller = CreateAccountController();
+  final controller = StorageController();
+  final validator = Validators();
 
-  bool passwordVisible = false;
+  bool passwordVisible = true;
+
+  bool hasSuccess = false;
 
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext createContext) {
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -33,7 +37,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    height: 400,
+                    constraints: BoxConstraints(minHeight: 400, maxHeight: 420),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -60,7 +64,8 @@ class _CreateAccountState extends State<CreateAccount> {
                             ),
                             label: "E-mail",
                             helperText: "youremail@mail.com",
-                            validator: (value) {},
+                            validator: (value) =>
+                                validator.emailValidator(value),
                             onChanged: (value) {
                               controller.onChange(email: value);
                             },
@@ -72,7 +77,8 @@ class _CreateAccountState extends State<CreateAccount> {
                             ),
                             label: "Name",
                             helperText: "Full Name",
-                            validator: (value) {},
+                            validator: (value) =>
+                                validator.nameValidator(value),
                             onChanged: (value) {
                               controller.onChange(name: value);
                             },
@@ -99,32 +105,33 @@ class _CreateAccountState extends State<CreateAccount> {
                             label: "Password",
                             helperText: "8 characteres minimum",
                             obscureText: passwordVisible,
-                            validator: (value) {},
+                            validator: (value) =>
+                                validator.passValidator(value),
                             onChanged: (value) {
                               controller.onChange(password: value);
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomButtonWidget(
+                            label: "Create Account",
+                            typeColorOrange: true,
+                            onTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                await controller.saveUser();
+                                var response = controller.saveSuccess;
+                                if (response) {
+                                  Navigator.pushReplacementNamed(
+                                      context, "/response");
+                                }
+                              }
                             },
                           ),
                         ],
                       ),
                     ),
                   )
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomButtonWidget(
-                    label: "Create Account",
-                    typeColorOrange: true,
-                    onTap: () {
-                      controller.saveUser(createContext);
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                 ],
               ),
             ),
